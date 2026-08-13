@@ -1,0 +1,50 @@
+@model CreateBookingViewModel
+@{
+    ViewData["Title"] = "Book " + Model.FacilityName;
+}
+
+<section class="section container">
+    <div class="form-card">
+        <div class="text-center mb-16">
+            <span class="badge badge-blue">Booking</span>
+            <h1 style="font-size:1.5rem">@Model.FacilityName</h1>
+            <p class="text-muted small">$@Model.PricePerHour.ToString("0.00") per hour</p>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <form asp-controller="Booking" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="FacilityId" />
+            <input type="hidden" asp-for="FacilityName" />
+            <input type="hidden" asp-for="PricePerHour" />
+
+            <div class="form-group">
+                <label asp-for="BookingDate">Date</label>
+                <input asp-for="BookingDate" type="date" value="@Model.BookingDate.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="BookingDate" class="field-error"></span>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="form-group">
+                    <label asp-for="StartTime">Start time</label>
+                    <input asp-for="StartTime" type="time" />
+                    <span asp-validation-for="StartTime" class="field-error"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndTime">End time</label>
+                    <input asp-for="EndTime" type="time" />
+                    <span asp-validation-for="EndTime" class="field-error"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Notes">Notes (optional)</label>
+                <textarea asp-for="Notes" placeholder="Anything the facility staff should know?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+            <a asp-controller="Facilities" asp-action="Details" asp-route-id="@Model.FacilityId" class="btn btn-ghost btn-block mt-8">Cancel</a>
+        </form>
+    </div>
+</section>
