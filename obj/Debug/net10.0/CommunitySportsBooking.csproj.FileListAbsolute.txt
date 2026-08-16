@@ -29,7 +29,6 @@ C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\De
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\scopedcss\bundle\CommunitySportsBooking.styles.css
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\scopedcss\projectbundle\CommunitySportsBooking.bundle.scp.css
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\3t19zuh5up-{0}-61n19gt1b8-61n19gt1b8.gz
-C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\0qv36y42ji-{0}-aq7kf54gwv-aq7kf54gwv.gz
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\c7dqu1vr8t-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\nvlu1c5rt9-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\blbp6bp3ts-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -102,4 +101,6 @@ C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\De
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\CommunitySportsBooking.pdb
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\CommunitySportsBooking.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\ref\CommunitySportsBooking.dll
-C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\gczw2opcns-{0}-5c1iofmydl-5c1iofmydl.gz
+C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\CommunitySportsBooking.sourcelink.json
+C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\gczw2opcns-{0}-68o62cv5r4-68o62cv5r4.gz
+C:\Users\ASUS\Desktop\CommunitySportsBookingSystem\CommunitySportsBooking\obj\Debug\net10.0\compressed\0qv36y42ji-{0}-2ld4vrv3nb-2ld4vrv3nb.gz
