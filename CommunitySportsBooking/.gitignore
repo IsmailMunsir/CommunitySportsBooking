@@ -1,6 +1,5 @@
-New-Item .gitignore -ItemType File
-Add-Content .gitignore "**/bin/"
-Add-Content .gitignore "**/obj/"
-Add-Content .gitignore "**/wwwroot/lib/"
-Add-Content .gitignore "*.user"
-Add-Content .gitignore ".vs/"
+bin/
+obj/
+wwwroot/lib/
+*.user
+.vs/
