@@ -1,0 +1,76 @@
+@model Facility
+@{
+    ViewData["Title"] = Model.Name;
+    var reviews = ViewBag.Reviews as List<Review> ?? new List<Review>();
+    var avgRating = (double)(ViewBag.AverageRating ?? 0.0);
+}
+
+<section class="section container">
+    <div class="grid" style="grid-template-columns: 1.4fr 1fr; gap: 32px;">
+        <div>
+            <div class="facility-image-placeholder" style="height:260px; border-radius: var(--radius-lg); font-size:2rem;">
+                @Model.Type
+            </div>
+
+            <div class="flex items-center gap-12 mt-16">
+                <span class="badge badge-blue">@Model.Type</span>
+                @if (avgRating > 0)
+                {
+                    <span class="rating-star">@(new string('★', (int)Math.Round(avgRating)))</span>
+                    <span class="small text-muted">(@avgRating.ToString("0.0") / 5 from @reviews.Count reviews)</span>
+                }
+                else
+                {
+                    <span class="small text-muted">No reviews yet</span>
+                }
+            </div>
+
+            <h1 class="mt-8">@Model.Name</h1>
+            <p>📍 @Model.Location</p>
+            <p>@Model.Description</p>
+
+            <div class="grid grid-2 mt-16">
+                <div class="card card-body">
+                    <span class="small text-muted">Capacity</span>
+                    <p style="color:var(--color-text); font-weight:600; margin:0;">@Model.Capacity people</p>
+                </div>
+                <div class="card card-body">
+                    <span class="small text-muted">Hours</span>
+                    <p style="color:var(--color-text); font-weight:600; margin:0;">@Model.OpeningTime – @Model.ClosingTime</p>
+                </div>
+            </div>
+
+            <h3 class="mt-32">Member reviews</h3>
+            @if (reviews.Count == 0)
+            {
+                <p class="text-muted small">No reviews yet for this facility.</p>
+            }
+            else
+            {
+                @foreach (var review in reviews)
+                {
+                    <div class="card card-body mt-8">
+                        <div class="flex justify-between">
+                            <strong>@review.MemberName</strong>
+                            <span class="rating-star">@(new string('★', review.Rating))@(new string('☆', 5 - review.Rating))</span>
+                        </div>
+                        <p class="mt-8" style="margin-bottom:0;">@review.Comment</p>
+                        <span class="small text-muted">@review.CreatedAt.ToString("dd MMM yyyy")</span>
+                    </div>
+                }
+            }
+        </div>
+
+        <div>
+            <div class="card card-body" style="position:sticky; top:88px;">
+                <span class="price-tag" style="font-size:1.6rem;">$@Model.PricePerHour.ToString("0.00")</span>
+                <span class="text-muted small">per hour</span>
+
+                <a asp-controller="Booking" asp-action="Create" asp-route-facilityId="@Model.Id" class="btn btn-primary btn-block mt-16">Book This Facility</a>
+                <a asp-controller="Review" asp-action="Create" asp-route-facilityId="@Model.Id" class="btn btn-outline btn-block mt-8">Leave a Review</a>
+
+                <p class="small text-muted mt-16">Bookings are confirmed instantly, subject to availability for your chosen date and time.</p>
+            </div>
+        </div>
+    </div>
+</section>

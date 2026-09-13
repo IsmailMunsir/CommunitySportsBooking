@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] — Community Sports Facilities Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div id="page-loading-bar"></div>
+
+    <header class="navbar">
+        <div class="container navbar-inner">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-mark">🏟</span>
+                CommunitySport<span style="color:var(--color-emerald)">Book</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="Facilities" asp-action="Search">Find a Facility</a></li>
+                    <li><a asp-controller="Booking" asp-action="MyBookings">My Bookings</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="Guest" asp-action="Search">Browse Facilities</a></li>
+                }
+                <li><a asp-controller="Review" asp-action="Index">Reviews</a></li>
+                <li><a asp-controller="Guest" asp-action="Inquiry">Contact</a></li>
+            </ul>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+            </button>
+
+            <div class="nav-actions">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <span class="small text-muted">Hi, @User.Identity.Name</span>
+                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline btn-sm">Sign Out</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-ghost btn-sm">Sign In</a>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-sm">Join Now</a>
+                }
+            </div>
+        </div>
+    </header>
+
+    <main>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="container mt-24">
+                <div class="alert alert-success">✓ @TempData["SuccessMessage"]</div>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="container mt-24">
+                <div class="alert alert-danger">⚠ @TempData["ErrorMessage"]</div>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>CommunitySportBook</h4>
+                    <p class="small mt-8">Helping the community discover, book, and enjoy local sports facilities — tennis, soccer, basketball, and more.</p>
+                </div>
+                <div>
+                    <h4>Members</h4>
+                    <p><a asp-controller="Account" asp-action="Login">Sign In</a></p>
+                    <p><a asp-controller="Account" asp-action="Register">Register</a></p>
+                    <p><a asp-controller="Booking" asp-action="MyBookings">My Bookings</a></p>
+                </div>
+                <div>
+                    <h4>Guests</h4>
+                    <p><a asp-controller="Guest" asp-action="BecomeMember">Become a Member</a></p>
+                    <p><a asp-controller="Guest" asp-action="Search">Browse Facilities</a></p>
+                    <p><a asp-controller="Review" asp-action="Index">Read Reviews</a></p>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <p><a asp-controller="Guest" asp-action="Inquiry">Send an Inquiry</a></p>
+                    <p><a asp-controller="Home" asp-action="Privacy">Privacy Policy</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© @DateTime.Now.Year Community Sports Facilities Booking System</span>
+                <span>Built with ASP.NET Core MVC &amp; MongoDB</span>
+            </div>
+        </div>
+    </footer>
+
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,69 @@
+@model List<Booking>
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<section class="section container">
+    <div class="section-heading">
+        <span class="kicker">Members</span>
+        <h1>My bookings</h1>
+        <p class="text-muted">Manage your upcoming and past facility reservations.</p>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="icon">📅</div>
+            <p>You haven't made any bookings yet.</p>
+            <a asp-controller="Facilities" asp-action="Search" class="btn btn-primary mt-16">Find a Facility</a>
+        </div>
+    }
+    else
+    {
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Facility</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td><strong>@booking.FacilityName</strong></td>
+                        <td>@booking.BookingDate.ToString("dd MMM yyyy")</td>
+                        <td>@booking.StartTime – @booking.EndTime</td>
+                        <td>
+                            @{
+                                var badgeClass = booking.Status switch
+                                {
+                                    BookingStatus.Confirmed => "badge-success",
+                                    BookingStatus.Cancelled => "badge-danger",
+                                    BookingStatus.Completed => "badge-blue",
+                                    _ => "badge-warning"
+                                };
+                            }
+                            <span class="badge @badgeClass">@booking.Status</span>
+                        </td>
+                        <td>
+                            <div class="flex gap-8">
+                                @if (booking.Status == BookingStatus.Confirmed && booking.BookingDate >= DateTime.Today)
+                                {
+                                    <form asp-controller="Booking" asp-action="Cancel" asp-route-id="@booking.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                                    </form>
+                                }
+                                <a asp-controller="Review" asp-action="Create" asp-route-facilityId="@booking.FacilityId" asp-route-bookingId="@booking.Id" class="btn btn-outline btn-sm">Review</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>

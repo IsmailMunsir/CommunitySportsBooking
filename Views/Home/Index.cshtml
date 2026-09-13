@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var featured = ViewBag.FeaturedFacilities as List<Facility> ?? new List<Facility>();
+    var recentReviews = ViewBag.RecentReviews as List<Review> ?? new List<Review>();
+}
+
+<section class="hero">
+    <svg class="hero-lines" viewBox="0 0 1160 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="60" y="40" width="1040" height="400" rx="6" fill="none" stroke="#1d4ed8" stroke-opacity="0.08" stroke-width="2"/>
+        <line x1="580" y1="40" x2="580" y2="440" stroke="#0d9488" stroke-opacity="0.10" stroke-width="2"/>
+        <circle cx="580" cy="240" r="70" fill="none" stroke="#1d4ed8" stroke-opacity="0.08" stroke-width="2"/>
+        <rect x="60" y="140" width="140" height="200" fill="none" stroke="#0d9488" stroke-opacity="0.08" stroke-width="2"/>
+        <rect x="960" y="140" width="140" height="200" fill="none" stroke="#0d9488" stroke-opacity="0.08" stroke-width="2"/>
+    </svg>
+
+    <div class="container hero-inner">
+        <div>
+            <span class="eyebrow">● Live availability across the community</span>
+            <h1>Book your local sports facility in minutes.</h1>
+            <p class="lead">Search tennis courts, soccer fields, basketball courts and more — check real-time availability, reserve a slot, and share how it went with other members.</p>
+
+            <div class="hero-actions">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Facilities" asp-action="Search" class="btn btn-primary">Find a Facility</a>
+                    <a asp-controller="Booking" asp-action="MyBookings" class="btn btn-outline">My Bookings</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Join as a Member</a>
+                    <a asp-controller="Guest" asp-action="Search" class="btn btn-outline">Browse as Guest</a>
+                }
+            </div>
+
+            <div class="hero-stats">
+                <div><strong>@(featured.Count > 0 ? "6+" : "0")</strong><span>Facility types</span></div>
+                <div><strong>24/7</strong><span>Online booking</span></div>
+                <div><strong>Free</strong><span>To register</span></div>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <h3>New here?</h3>
+            <p class="small">Guests can quickly become a member with just a name and email — or browse facilities right away without an account.</p>
+            <a asp-controller="Guest" asp-action="BecomeMember" class="btn btn-teal btn-block">Become a Member</a>
+            <a asp-controller="Guest" asp-action="Inquiry" class="btn btn-ghost btn-block mt-8">Send an Inquiry</a>
+        </div>
+    </div>
+</section>
+
+<section class="section container">
+    <div class="section-heading flex justify-between items-center">
+        <div>
+            <span class="kicker">Popular right now</span>
+            <h2>Featured facilities</h2>
+        </div>
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Facilities" asp-action="Search">View all →</a>
+        }
+        else
+        {
+            <a asp-controller="Guest" asp-action="Search">View all →</a>
+        }
+    </div>
+
+    @if (featured.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="icon">🏟</div>
+            <p>No facilities available yet. Please check back soon.</p>
+        </div>
+    }
+    else
+    {
+        <div class="grid grid-3">
+            @foreach (var facility in featured)
+            {
+                <div class="card card-hover facility-card">
+                    <div class="facility-image-placeholder">@facility.Type</div>
+                    <div class="card-body">
+                        <span class="badge badge-blue">@facility.Type</span>
+                        <h3 class="mt-8" style="font-size:1.1rem">@facility.Name</h3>
+                        <p class="small">📍 @facility.Location</p>
+                        <div class="flex justify-between items-center mt-16">
+                            <span class="price-tag">$@facility.PricePerHour.ToString("0.00")<span class="text-muted small">/hr</span></span>
+                            <a asp-controller="Facilities" asp-action="Details" asp-route-id="@facility.Id" class="btn btn-outline btn-sm">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<section class="section container">
+    <div class="section-heading">
+        <span class="kicker">From the community</span>
+        <h2>What members are saying</h2>
+    </div>
+
+    @if (recentReviews.Count == 0)
+    {
+        <p class="text-muted">No reviews yet — be the first to share your experience after a booking.</p>
+    }
+    else
+    {
+        <div class="grid grid-3">
+            @foreach (var review in recentReviews)
+            {
+                <div class="card card-body">
+                    <span class="rating-star">@(new string('★', review.Rating))@(new string('☆', 5 - review.Rating))</span>
+                    <p class="mt-8">"@review.Comment"</p>
+                    <p class="small text-muted">— @review.MemberName, on @review.FacilityName</p>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<section class="section container">
+    <div class="grid grid-2">
+        <div class="card card-body">
+            <span class="badge badge-blue">For Members</span>
+            <h3 class="mt-8">Sign in for full access</h3>
+            <p>Search facilities by type, location, date and time, book instantly, and leave reviews after your session.</p>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign In</a>
+        </div>
+        <div class="card card-body">
+            <span class="badge">For Guests</span>
+            <h3 class="mt-8">Just exploring?</h3>
+            <p>Browse facility types and general availability, read member reviews, or send us an inquiry — no account required.</p>
+            <a asp-controller="Guest" asp-action="Search" class="btn btn-teal">Browse Facilities</a>
+        </div>
+    </div>
+</section>
